@@ -1,0 +1,10 @@
+
+<div id="result">
+	#parse("apps/monitor/result.vm")
+</div>
+
+<script>
+_jq( document ).ready(function() {
+
+});
+</script>

@@ -1,0 +1,9 @@
+
+<div id="chart_area" style="padding:10px">
+	#parse("apps/monitor/live_chart.vm")
+</div>
+<br/><br/>
+<div id="info_area" style="padding:10px">
+	#parse("apps/monitor/status.vm")
+</div>
+

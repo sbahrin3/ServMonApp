@@ -1,0 +1,79 @@
+
+<div id="chartContainer1" style="height: 250px; width: 100%; border:1px dotted #fff;margin:10px"></div>
+
+
+
+<script>
+
+_jq( document ).ready(function() {
+    loadChart();
+    
+});
+
+
+function loadChart() {
+	
+	var chart = new CanvasJS.Chart("chartContainer1", {
+	animationEnabled: true,
+	theme: "light2",
+	title:{
+		text: ""
+	},
+	axisX:{
+		valueFormatString: "",
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	axisY: {
+		title: "Memory Usage",
+		valueFormatString:"",
+		crosshair: {
+			enabled: true
+		}
+	},
+	toolTip:{
+		shared:true
+	},  
+	legend:{
+		cursor:"pointer",
+		verticalAlign: "bottom",
+		horizontalAlign: "left",
+		dockInsidePlotArea: true,
+		itemclick: toogleDataSeries
+	},
+	data: [{
+		type: "line",
+		showInLegend: false,
+		name: "Memory Usage",
+		markerType: "square",
+		color: "#F08080",
+		dataPoints: [
+			#foreach ( $d in $dataList )
+				#if ( $d.counter > 59 )
+					{ x: $d.counter, y: $d.freeMemory },
+				#end
+			#end
+			]
+		}]
+	});
+	
+	chart.render();
+	function toogleDataSeries(e){
+		if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+			e.dataSeries.visible = false;
+		} else{
+			e.dataSeries.visible = true;
+		}
+		chart.render();
+	}
+	
+	
+	
+	
+}
+
+
+
+</script>

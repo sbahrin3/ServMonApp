@@ -1,0 +1,14 @@
+<div id="calculator_main">
+
+	<h1>Result: $!result</h1>
+	
+	<input name="number1" value="$!number1">
+	<input name="number2" value="$!number2">
+	
+	<input type="button" onclick="sendAjax('calculate', 'calculator_main', 'operation=add')" value="Add">
+	
+	<input type="button" onclick="sendAjax('calculate', 'operation=substract', 'calculator_main')" value="Substract">
+	
+	<input type="button" onclick="sendAjax('calculate', 'operation=multiply')" value="Multiply">
+
+</div>

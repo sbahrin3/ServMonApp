@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<title>Servmon</title>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="shortcut icon" href="../views/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="../views/img/favicon.ico" type="image/x-icon">
+
+<!-- 
+ <script type="text/javascript">
+     function preventBack() { window.history.forward(); }
+     setTimeout("preventBack()", 0);
+     window.onunload = function () { null };
+ </script>
+-->
+ 
+#parse("vtl/main/js_css.vm")
+</head>
+<body style="background:#ebebeb">
+
+<div id="navbar">
+
+
+	<div id="app_title" style="float:left;">
+		<button class="openbtn" onclick="toggleNav()"><i class="fa fa-bars" aria-hidden="true"></i></button>  
+		SERVMON
+	</div>
+	#**
+	<div style="float:right;padding:15px;text-align:right;">
+		#if ( $_logged_in )
+			
+			#parse("vtl/main/user_logged_in.vm")
+			
+		#else
+			<a href="javascript:void(0)" style="cursor:hand; cursor:pointer;color:#fff;font-family:Verdana;font-size:10pt;"  onclick="show_login()">Login</a>
+		#end
+	</div>
+	**#
+
+	
+
+</div>
+
+<div id="portalSideMenu" class="sidebar">
+
+	<div class="sidebar-title" onclick="closeNav()">
+  		&nbsp;
+  	</div>
+  	
+  	<div>
+  		##parse("vtl/main/menu_demo.vm")
+  	</div>
+  	<div id="bottom_text">
+  		&copy; Lebah Framework
+  	</div>
+</div>
+
+
+<div id="main" class="divMainBody" style="background:#ebebeb">
+
+	<div class="wrapper content content-body">
+		<form id="__main_form" name="__main_form" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="command" id="command">
+			<input type="hidden" name="__module_name" id="__module_name" style="width:500px">
+			<input type="hidden" id="main_token" name="main_token" value="$!main_token">
+			<div id="portal_main_view"></div>
+			<div id="div_center" class="shadow"></div>
+			<div id="div_empty"></div>
+			#parse("vtl/main/modal-window.vm")
+		</form>
+	</div>
+	
+	<div style="margin-top:300px;text-align:center">
+		<a href="#" style="text-decoration:none" data-toggle="modal" data-target="#modalAbout">&copy; 2019 Lebah
+		. 
+		Sales & Service Management System
+		.
+		Version 1.0
+		.
+		</a>
+	</div>
+
+</div>
+
+<iframe id="upload_document" name="upload_document" width="0px" height="0px" style="visibility:hidden"></iframe>
+
+
+#parse("vtl/main/modal-confirmation.vm")
+#parse("vtl/main/modal-login.vm")
+#parse("vtl/main/modal-about.vm")
+
+
+<script>
+	
+	var lastMenu;
+	var isScrollTop = true;
+	
+	var _jq = jQuery.noConflict();
+	
+	function show_login() {
+		_jq("#login_modal").modal();	
+	}
+	
+	window.onscroll = function() {
+		stickyNavBar()
+	};
+
+	var navbar = document.getElementById("navbar");
+	var sticky = navbar.offsetTop;
+	
+	function stickyNavBar() {
+		if (window.pageYOffset > sticky ) {
+			navbar.classList.add("sticky")
+		} else {
+			navbar.classList.remove("sticky");
+		}
+		
+	}
+
+	function openNav() {
+		document.getElementById("portalSideMenu").style.width = "250px";
+		document.getElementById("main").style.marginLeft = "250px";
+		document.getElementById("app_title").style.marginLeft = "250px";
+	}
+
+	function closeNav() {
+		document.getElementById("portalSideMenu").style.width = "0px";
+		document.getElementById("main").style.marginLeft = "0";
+		document.getElementById("app_title").style.marginLeft = "0";
+	}
+	
+	function toggleNav() {
+		if ( document.getElementById("portalSideMenu").style.width === "0px" || document.getElementById("portalSideMenu").style.width === "" )
+			openNav();
+		else
+			closeNav();
+	}
+	
+	function uploadFile(elementName, e, querystring) {
+		document.getElementById(e).innerHTML = '<img src="../img/indicator.gif"> Uploading.. please wait... ';
+		document.__main_form.enctype='multipart/form-data';
+		document.__main_form.encoding ='multipart/form-data';
+		document.__main_form.target='upload_document';
+		
+		var module_name = document.getElementById('__module_name').value;
+		document.__main_form.action='../div/' + module_name + '?command=uploadFile&elementName=' + elementName + '&divUploadStatusName=' + e + '&' + querystring;
+		document.__main_form.submit();
+	}
+	
+	function sendAjaxConfirm(msgHeader, msgBody, action, div, param) {
+		document.getElementById("modal-header").innerHTML = msgHeader;
+		document.getElementById("modal-message").innerHTML = msgBody;
+		document.getElementById("action").value = action;
+		document.getElementById("div").value = div;
+		document.getElementById("param").value = param;
+	}
+		
+	function sendAjax2(action, div, param) {
+		isScrollTop = false;
+		sendAjax(action, div, param);
+	}
+	
+	function sendAjax3(action, div, param) {
+		isScrollTop = false;
+		sendAjaxSilence(action, div, param);
+	}
+	
+	function sendAjaxQuite(action, div, param) {
+		isScrollTop = false;
+		sendAjax(action, div, param);
+	}
+	
+	function toggleSubMenu(e) {
+		if ( document.getElementById(e).style.display == "none" ) {
+			//document.getElementById(e).style.display = "block";
+			_jq('#' + e).slideDown('slow');
+			document.getElementById('icon-' + e).innerHTML = '<i class="fa fa-angle-down" aria-hidden="true"></i>';
+		}
+		else {
+			//document.getElementById(e).style.display = "none";
+			_jq('#' + e).slideUp('slow');
+			document.getElementById('icon-' + e).innerHTML = '<i class="fa fa-angle-right" aria-hidden="true"></i>';
+		}
+	}
+	
+	function scrollTop() {
+		if ( isScrollTop ) {
+			_jq('body, html, #portal_main_view').scrollTop(0);
+		}
+		isScrollTop = true;
+	}
+	
+	function menuSelect(e) {
+		
+		e.className='menu-selected';
+		if ( typeof lastMenu !== "undefined" && lastMenu !== e ) lastMenu.className='menu-normal';
+		lastMenu = e;
+	}
+	
+	function showMyProfile() {
+		$('a_my_profile').className='menu-selected';
+		if ( typeof lastMenu !== "undefined" ) lastMenu.className='menu-normal';
+		lastMenu = $('a_my_profile');
+		getPage('lebah.module.UserProfileModule');
+	}
+	
+	function showNotifyMessage(msg) {
+		 _jq.jGrowl(msg, { position:'top-right', theme:'notify' });
+	}
+	
+	function showWarningMessage(msg) {
+		 _jq.jGrowl(msg, { position:'top-right', theme:'warning' });
+	}
+
+	function gotoExpiredPage() {
+		document.location.href = "../expired.jsp";
+	}
+	
+	//ON PAGE FIRST LOAD
+	Event.observe(window, "load", onload, false);
+	function onload(){
+		let page_name = 'sb.servmon.module.MonitoringModule';
+		getPage(page_name);
+	}
+	
+
+	
+	document.onkeydown = KeyCheck; 
+	
+	function KeyCheck(e)
+	{
+	   var KeyID = (window.event) ? event.keyCode : e.keyCode;
+	   
+	   //console.log("key check: " + KeyID);
+  
+	   switch(KeyID)
+	   {
+	      case 18: //Alt
+	      alert('Disabled!');
+	      break; 
+
+	      case 17: //Ctrl
+	      
+	      break;
+	      
+	      case 91: //Cmd
+	      alert('Disabled!');
+	      break;
+
+	   }
+	}
+	
+</script>
+</body>
+</html>

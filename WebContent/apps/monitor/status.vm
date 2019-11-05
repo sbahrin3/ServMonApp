@@ -1,0 +1,36 @@
+<table>
+	<tr>
+		<td style="width:100px">Total Memory</td><td style="width:10px">:</td>
+		<td>$nf.format($totalMemory)</td>
+	</tr>
+	
+	<tr>
+		<td style="width:100px">Used Memory</td><td style="width:10px">:</td>
+		<td>$nf.format($usedMemory)</td>
+	</tr>
+	<tr>
+		<td style="width:100px">Free Memory</td><td style="width:10px">:</td>
+		<td>$nf.format($freeMemory)</td>
+	</tr>	
+	
+	<tr>
+		<td>OS Name</td><td>:</td>
+		<td>$osName</td>
+	</tr>
+	<tr>
+		<td>OS Version</td><td>:</td>
+		<td>$osVersion</td>
+	</tr>
+	<tr>
+		<td>OS Arch</td><td>:</td>
+		<td>$osArch</td>
+	</tr>
+	
+	<tr>
+		<td>Db Conns</td><td>:</td>
+		<td>
+		<div id="activeConnections"></div>
+		</td>
+	</tr>
+	
+</table>

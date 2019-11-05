@@ -1,0 +1,20 @@
+<h1>Hello World</h1>
+
+#**
+
+	Ini adalah komen
+	yang ada banyak line
+
+**#
+
+<div class="form-group">
+<label>Name</label>
+<input type="text" class="form-control" name="userName" id="userName">
+<div  class="alert alert-warning" style="display:none" id="userName_error" onclick="this.style.display='none'"></div>
+</div>
+
+<div class="form-group">
+	<button type="button" class="btn btn-primary" onclick="sendAjax('sayHello','divSayHello', '')">Send</button>
+</div>
+
+<div id="divSayHello"></div>
