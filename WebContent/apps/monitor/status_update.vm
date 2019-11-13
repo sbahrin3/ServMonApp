@@ -1,0 +1,41 @@
+
+<div class="row">
+	<div class="col-sm-3" style="padding:1px;height:150px;text-align:center;background:#449d44;color:#fff;font-size:18pt">
+		<div style="height:80px">Total Memory</div>
+		<div>$nf.format($totalMemory)</div>
+	</div>
+	<div class="col-sm-3" style="padding:1px;height:150px;text-align:center;background:#449d44;color:#fff;font-size:18pt">
+		<div style="height:80px">Used Memory</div>
+		<div>$nf.format($usedMemory)</div>
+		
+	</div>
+	<div class="col-sm-3" style="padding:1px;height:150px;text-align:center;background:#449d44;color:#fff;font-size:18pt">
+		<div style="height:80px">Free Memory</div>
+		<div>$nf.format($freeMemory)</div>
+	</div>
+	<div class="col-sm-3" style="padding:1px;height:150px;text-align:center;background:#449d44;color:#fff;font-size:18pt">
+		<div style="height:80px">Db Connections</div>
+		<div>$!activeConnections</div>
+	</div>
+</div> 
+
+<br/><br/>
+
+<table>
+
+	<tr>
+		<td style="width:100px">OS Name</td><td>:</td>
+		<td>$osName</td>
+	</tr>
+	<tr>
+		<td>OS Version</td><td>:</td>
+		<td>$osVersion</td>
+	</tr>
+	<tr>
+		<td>OS Arch</td><td>:</td>
+		<td>$osArch</td>
+	</tr>
+	
+	
+	
+</table>

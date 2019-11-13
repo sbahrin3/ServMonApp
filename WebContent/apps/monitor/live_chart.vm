@@ -16,7 +16,7 @@ function loadChart() {
 	var chart = new CanvasJS.Chart("chartContainer", {
 		theme: "light2",
 		title: {
-			text: "JVM Free Memory"
+			text: "Free Memory"
 		},
 		data: [{
 			type: "line",
@@ -54,7 +54,8 @@ function loadChart() {
 	
 	function updateData() {
 		_jq.getJSON("${serverUrl}/servmon/servlet/sb.servmon.module.GetData?length=" + newDataCount + "&xstart=" + xValue, addData);
-		sendAjax3('getActiveConnections', 'activeConnections', '');
+		//sendAjax3('getActiveConnections', 'activeConnections', '');
+		sendAjax3('getStatusUpdate', 'status_update', '');
 	}
 
 }

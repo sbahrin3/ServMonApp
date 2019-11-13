@@ -82,5 +82,29 @@ public class MonitoringModule extends LebahModule {
 		context.put("activeConnections", num);
 		return path + "/activeConnections.vm";
 	}
+	
+	
+	@Command("getStatusUpdate")
+	public String getStatusUpdate() throws Exception {
+		
+		long freeMemory = MonitorDaemon.freeMemory;
+		long totalMemory = MonitorDaemon.totalMemory;
+		long usedMemory  = MonitorDaemon.usedMemory;
+		
+		String osName = System.getProperty("os.name");
+		String osVersion = System.getProperty("os.version");
+		String osArch = System.getProperty("os.arch");
+		
+		context.put("freeMemory", freeMemory/1024);
+		context.put("totalMemory", totalMemory/1024);
+		context.put("usedMemory", usedMemory/1024);
+		context.put("osName", osName);
+		context.put("osVersion", osVersion);
+		context.put("osArch", osArch);
+		
+		getNumberOfActiveConnections();
+		
+		return path + "/status_update.vm";
+	}
 
 }
